@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d17" />
+    <meta name="description" content="A small 3D game prototype about a prayer answered." />
+    <title>Divine Intervention</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="Divine Intervention home">
+          <span class="wordmark-mark" aria-hidden="true">✳</span>
+          <span>DIVINE<br />INTERVENTION</span>
+        </a>
+        <div class="chapter"><span>CHAPTER I</span><i></i><span>THE SILENT ALTAR</span></div>
+        <div class="sound-indicator"><span class="sound-dot"></span> SOUND ON</div>
+      </header>
+
+      <main class="game-frame">
+        <div id="scene" aria-label="3D game scene"></div>
+        <div class="vignette" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+
+        <section class="intro" id="intro" aria-label="Game introduction">
+          <div class="intro-eyebrow"><span class="eyebrow-line"></span> A MYTH IN THE MAKING</div>
+          <h1>DIVINE<br /><em>INTERVENTION</em></h1>
+          <p class="intro-copy">The gods have gone quiet.<br />One last prayer remains.</p>
+          <button class="begin-button" id="begin-button" type="button">
+            <span>ENTER THE SANCTUARY</span><span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+          <div class="intro-hint">A SHORT, PLAYABLE PROTOTYPE</div>
+        </section>
+
+        <div class="hud hud-left" id="hud-left" aria-hidden="true">
+          <div class="hud-label">YOUR PURPOSE</div>
+          <div class="objective"><span class="objective-icon">✧</span><span>Reach the altar</span></div>
+          <div class="objective-sub">Follow the light. Offer a prayer.</div>
+        </div>
+
+        <div class="hud hud-right" id="hud-right" aria-hidden="true">
+          <span class="coordinates-label">SANCTUARY</span>
+          <span class="coordinates">— &nbsp; 01 / 01</span>
+        </div>
+
+        <div class="interaction" id="interaction" aria-live="polite" aria-hidden="true">
+          <span class="keycap">E</span><span>OFFER A PRAYER</span>
+        </div>
+
+        <div class="message" id="message" aria-live="polite" aria-hidden="true">
+          <span class="message-symbol">✳</span>
+          <span>YOUR PRAYER HAS BEEN HEARD</span>
+        </div>
+
+        <footer class="bottom-bar" id="bottom-bar">
+          <div class="controls-legend">
+            <span class="legend-group"><span class="keycap small">W</span><span class="keycap small">A</span><span class="keycap small">S</span><span class="keycap small">D</span><span class="legend-caption">MOVE</span></span>
+            <span class="legend-divider"></span>
+            <span class="legend-group"><span class="keycap small space-key">SPACE</span><span class="legend-caption">JUMP</span></span>
+            <span class="legend-divider"></span>
+            <span class="legend-group"><span class="keycap small">E</span><span class="legend-caption">PRAY</span></span>
+          </div>
+          <div class="footer-note">A quiet place between worlds <span>·</span> 60 FPS</div>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
