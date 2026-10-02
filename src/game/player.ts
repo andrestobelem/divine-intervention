@@ -1,26 +1,27 @@
 import * as THREE from 'three'
+import { START_POSITION } from './level.ts'
+import { movePosition } from './navigation.ts'
 
 export interface Player {
   group: THREE.Group
-  move: (direction: THREE.Vector2, delta: number, elapsed: number) => void
-  jump: (elapsed: number) => void
+  move: (direction: THREE.Vector2, delta: number, elapsed: number, values: Readonly<Record<string, number>>) => void
   update: (elapsed: number) => void
 }
 
 export function createPlayer(): Player {
   const group = new THREE.Group()
-  group.position.set(0, 0, 8.2)
+  group.position.set(START_POSITION.x, START_POSITION.y, START_POSITION.z)
 
   const robe = new THREE.Mesh(
     new THREE.ConeGeometry(0.55, 1.38, 9),
-    new THREE.MeshStandardMaterial({ color: 0x6e303e, roughness: 0.76 }),
+    new THREE.MeshStandardMaterial({ color: 0xb9b8a1, roughness: 0.76 }),
   )
   robe.position.y = 0.76
   group.add(robe)
 
   const mantle = new THREE.Mesh(
     new THREE.ConeGeometry(0.35, 1.16, 9),
-    new THREE.MeshStandardMaterial({ color: 0x9b6a51, roughness: 0.74 }),
+    new THREE.MeshStandardMaterial({ color: 0x617e77, roughness: 0.74 }),
   )
   mantle.position.set(0, 0.88, 0.035)
   group.add(mantle)
@@ -55,27 +56,16 @@ export function createPlayer(): Player {
 
   return {
     group,
-    move: (direction, delta, elapsed) => {
+    move: (direction, delta, elapsed, values) => {
       if (direction.lengthSq() === 0) return
-      const speed = 4.2
-      group.position.x = THREE.MathUtils.clamp(group.position.x + direction.x * speed * delta, -9.7, 9.7)
-      group.position.z = THREE.MathUtils.clamp(group.position.z + direction.y * speed * delta, -3.8, 12.3)
+      const speed = 2.8
+      const position = movePosition(group.position, direction.x * speed * delta, direction.y * speed * delta, values)
+      group.position.set(position.x, position.y, position.z)
       group.rotation.y = Math.atan2(direction.x, direction.y)
       robe.rotation.z = Math.sin(elapsed * 12) * 0.025
     },
-    jump: (elapsed) => {
-      group.userData.jumpUntil = elapsed + 0.72
-    },
     update: (elapsed) => {
-      const jumpUntil = group.userData.jumpUntil as number | undefined
-      const remaining = jumpUntil ? jumpUntil - elapsed : -1
-      if (remaining > 0) {
-        const progress = 1 - remaining / 0.72
-        group.position.y = Math.sin(progress * Math.PI) * 1.15
-      } else {
-        group.position.y = 0
-        if (jumpUntil) delete group.userData.jumpUntil
-      }
+      mantle.rotation.z = Math.sin(elapsed * 1.4) * 0.008
     },
   }
 }

@@ -1,69 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#090d17" />
-    <meta name="description" content="A small 3D game prototype about a prayer answered." />
-    <title>Divine Intervention</title>
+    <meta name="theme-color" content="#07151c" />
+    <meta name="description" content="Milagros prestados. Una aventura sobre la vida que cambia de manos." />
+    <title>Divine Intervention — Milagros prestados</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307151c'/%3E%3Ctext x='32' y='47' text-anchor='middle' fill='%23e3bd71' font-size='48'%3E✳%3C/text%3E%3C/svg%3E" />
   </head>
   <body>
     <div id="app">
+      <div id="scene"></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
       <header class="topbar">
-        <a class="wordmark" href="#" aria-label="Divine Intervention home">
-          <span class="wordmark-mark" aria-hidden="true">✳</span>
-          <span>DIVINE<br />INTERVENTION</span>
-        </a>
-        <div class="chapter"><span>CHAPTER I</span><i></i><span>THE SILENT ALTAR</span></div>
-        <div class="sound-indicator"><span class="sound-dot"></span> SOUND ON</div>
+        <div class="wordmark"><span class="wordmark-mark" aria-hidden="true">✳</span><span>DIVINE<br />INTERVENTION</span></div>
+        <div id="chapter" class="chapter">UNA PLEGARIA JUGABLE</div>
+        <button id="sound-button" class="sound-button" type="button" aria-label="Silenciar sonido" aria-pressed="false">◉ SONIDO ON</button>
       </header>
-
-      <main class="game-frame">
-        <div id="scene" aria-label="3D game scene"></div>
-        <div class="vignette" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
-
-        <section class="intro" id="intro" aria-label="Game introduction">
-          <div class="intro-eyebrow"><span class="eyebrow-line"></span> A MYTH IN THE MAKING</div>
-          <h1>DIVINE<br /><em>INTERVENTION</em></h1>
-          <p class="intro-copy">The gods have gone quiet.<br />One last prayer remains.</p>
-          <button class="begin-button" id="begin-button" type="button">
-            <span>ENTER THE SANCTUARY</span><span class="button-arrow" aria-hidden="true">↗</span>
-          </button>
-          <div class="intro-hint">A SHORT, PLAYABLE PROTOTYPE</div>
-        </section>
-
-        <div class="hud hud-left" id="hud-left" aria-hidden="true">
-          <div class="hud-label">YOUR PURPOSE</div>
-          <div class="objective"><span class="objective-icon">✧</span><span>Reach the altar</span></div>
-          <div class="objective-sub">Follow the light. Offer a prayer.</div>
+      <section class="intro" id="intro" aria-label="Introducción">
+        <div class="intro-eyebrow"><span></span> MILAGROS PRESTADOS</div>
+        <h1>Divine<br /><em>Intervention</em></h1>
+        <p id="intro-copy" class="intro-copy">Nada nace de la nada.<br />Pero la vida puede cambiar de manos.</p>
+        <button class="begin-button" id="begin-button" type="button"><span>ENTRAR AL SANTUARIO</span><span aria-hidden="true">↗</span></button>
+        <div class="intro-hint">EXPLORÁ · PRESTÁ VIDA · DESCUBRÍ QUÉ SIGUE LATIENDO</div>
+        <p class="desktop-note">Un viaje para teclado y mouse.</p>
+      </section>
+      <div id="game-ui" hidden>
+        <aside class="objective-panel" aria-label="Tu propósito">
+          <div class="hud-label">TU PROPÓSITO</div>
+          <h2 id="objective">Prestá vida a la raíz</h2>
+          <p id="objective-sub">El arbusto guarda lo que la raíz necesita.</p>
+        </aside>
+        <div class="game-actions">
+          <button id="undo-button" type="button" disabled><kbd>Z</kbd> DESHACER</button>
+          <button id="reset-button" type="button"><kbd>R</kbd> REINICIAR</button>
         </div>
-
-        <div class="hud hud-right" id="hud-right" aria-hidden="true">
-          <span class="coordinates-label">SANCTUARY</span>
-          <span class="coordinates">— &nbsp; 01 / 01</span>
+        <div id="plant-labels" class="plant-labels" aria-label="Plantas del santuario"></div>
+        <div class="interaction" id="interaction">
+          <div id="pair" class="pair">UN SOLO DON. MUCHAS POSIBILIDADES.</div>
+          <div id="prompt" class="prompt" role="status">Elegí una planta con vida.</div>
         </div>
-
-        <div class="interaction" id="interaction" aria-live="polite" aria-hidden="true">
-          <span class="keycap">E</span><span>OFFER A PRAYER</span>
-        </div>
-
-        <div class="message" id="message" aria-live="polite" aria-hidden="true">
-          <span class="message-symbol">✳</span>
-          <span>YOUR PRAYER HAS BEEN HEARD</span>
-        </div>
-
-        <footer class="bottom-bar" id="bottom-bar">
-          <div class="controls-legend">
-            <span class="legend-group"><span class="keycap small">W</span><span class="keycap small">A</span><span class="keycap small">S</span><span class="keycap small">D</span><span class="legend-caption">MOVE</span></span>
-            <span class="legend-divider"></span>
-            <span class="legend-group"><span class="keycap small space-key">SPACE</span><span class="legend-caption">JUMP</span></span>
-            <span class="legend-divider"></span>
-            <span class="legend-group"><span class="keycap small">E</span><span class="legend-caption">PRAY</span></span>
-          </div>
-          <div class="footer-note">A quiet place between worlds <span>·</span> 60 FPS</div>
+        <div class="message" id="message" role="status" hidden><span class="message-symbol" aria-hidden="true">✳</span><h3 id="message-title"></h3><p id="message-copy"></p></div>
+        <footer class="bottom-bar">
+          <div class="controls-legend"><span><kbd>W A S D</kbd> CAMINAR</span><span><kbd>CLIC</kbd> CONECTAR</span><span><kbd>E</kbd> PRESTAR</span><span><kbd>X</kbd> INVERTIR</span><span><kbd>ESC</kbd> SOLTAR</span></div>
+          <div id="route-status" class="footer-note">LA VIDA NO SE CREA. SE PRESTA.</div>
         </footer>
-      </main>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
