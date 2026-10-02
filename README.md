@@ -11,6 +11,8 @@ Released under the MIT License. See [LICENSE](./LICENSE).
 Install [Bun](https://bun.sh), then run:
 
 ```sh
+git clone https://github.com/andrestobelem/divine-intervention.git
+cd divine-intervention
 bun install
 bun run dev
 ```
